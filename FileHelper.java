@@ -1,63 +1,28 @@
 import java.io.File;
 
-
 public class FileHelper {
-
-    /**
-     * @param strIn
-     * @return
-     */
-    public static String noComments(String strIn){
-
-        int position = strIn.indexOf("//");
-        if (position != -1){
-            strIn = strIn.substring(0, position);
-        }
-        return strIn;
+    
+    // Checks if the file is an assembly file (.asm)
+    public static boolean isAsm(File file) {
+        return file.getName().endsWith(".asm");
     }
-
-    /**
-     * @param strIn
-     * @return
-     */
-    public static String noSpaces(String strIn){
-        String result = "";
-        if (strIn.length() != 0){
-            String[] segs = strIn.split(" ");
-            for (String s: segs){
-                result += s;
-            }
-        }
-        return result;
+    
+    // Removes comments from a line of code
+    public static String noComments(String line) {
+        int commentIndex = line.indexOf("//");
+        return (commentIndex != -1) ? line.substring(0, commentIndex).trim() : line.trim();
     }
-
-    /**
-     * @param fileIn
-     * @return
-     */
-    public static boolean isAsm(File fileIn){
-
-        String filename = fileIn.getName();
-        int position = filename.lastIndexOf(".");
-        if (position != -1) {
-            String ext = filename.substring(position);
-            if (ext.toLowerCase().equals(".asm")) {
-                return true;
-            }
-        }
-        return false;
+    
+    // Removes all spaces from a line
+    public static String noSpaces(String line) {
+        return line.replace(" ", "");
     }
-
-    /**
-     * @param strIn
-     * @param len
-     * @return
-     */
-    public static String padLeftZero(String strIn, int len){
-        for (int i = strIn.length(); i < len; i++){
-            strIn = "0" + strIn;
+    
+    // Pads a binary string with leading zeros to ensure it has the correct length
+    public static String padLeftZero(String binary, int length) {
+        while (binary.length() < length) {
+            binary = "0" + binary;
         }
-        return strIn;
+        return binary;
     }
-
 }
